@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recruit AI — ваш AI‑ассистент для собеседований</title>
+  <meta name="description" content="Recruit AI — AI‑платформа для автоматизированных интервью, оценки soft/hard/communication skills и экономии времени HR‑команд." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0a0a0b;
+      --card: rgba(255,255,255,0.04);
+      --muted: rgba(255,255,255,0.65);
+      --line: rgba(255,255,255,0.12);
+      --white: #fff;
+      --accent: #ffffff;
+      --maxw: 1120px;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --grad-a: radial-gradient(1200px 600px at 10% -10%, rgba(255,255,255,.08), transparent 60%);
+      --grad-b: radial-gradient(900px 500px at 110% 10%, rgba(255,255,255,.06), transparent 60%);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Helvetica,Arial; color:var(--white); background:var(--bg);
+      background-image: var(--grad-a), var(--grad-b);
+      line-height:1.55; letter-spacing:0.2px;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:12px 18px; border-radius:999px; font-weight:700; background:var(--white); color:#000; transition:transform .15s ease, opacity .2s}
+    .btn:hover{transform:translateY(-1px); opacity:.95}
+    .btn.secondary{background:transparent; color:var(--white); border:1px solid var(--line)}
+    .badge{display:inline-flex; align-items:center; gap:10px; font-size:12px; padding:8px 12px; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,.03)}
+    .muted{color:var(--muted)}
+
+    /* NAV */
+    .nav{position:sticky; top:0; z-index:30; backdrop-filter:saturate(140%) blur(8px); background:rgba(10,10,11,.55); border-bottom:1px solid var(--line)}
+    .nav-inner{height:64px; display:flex; align-items:center; justify-content:space-between}
+    .brand{font-weight:800; letter-spacing:.4px}
+    .navlinks{display:none; gap:22px; font-size:14px}
+    @media(min-width:880px){.navlinks{display:flex}}
+
+    /* HERO */
+    .hero{position:relative; padding:72px 0 64px; overflow:hidden}
+    .hero-grid{display:grid; gap:28px}
+    @media(min-width:920px){.hero-grid{grid-template-columns:1.2fr .8fr; align-items:center}}
+    .hero h1{font-size:40px; line-height:1.1; margin:8px 0 12px}
+    @media(min-width:720px){.hero h1{font-size:56px}}
+    .hero p{font-size:18px; color:var(--muted)}
+    .hero-cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:22px}
+    .hero-shot{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--card); box-shadow:var(--shadow)}
+
+    /* SECTIONS */
+    section{padding:72px 0}
+    .section-head{margin-bottom:28px}
+    .section-head h2{font-size:32px; margin:0 0 8px}
+    .grid-3{display:grid; gap:16px}
+    @media(min-width:760px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+    .card{border:1px solid var(--line); background:var(--card); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow)}
+    .card h3{margin:4px 0 10px; font-size:18px}
+
+    /* MVP Gallery */
+    .mvp{display:grid; gap:16px}
+    @media(min-width:900px){.mvp{grid-template-columns:1fr 1fr}}
+    .screen{border:1px solid var(--line); background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border-radius:14px; padding:10px; box-shadow:var(--shadow)}
+    .screen img{border-radius:10px}
+    .screen-caption{font-size:13px; color:var(--muted); padding:8px 2px 0}
+
+    /* Model */
+    .stats{display:grid; gap:16px}
+    @media(min-width:900px){.stats{grid-template-columns:repeat(4,1fr)}}
+    .stat{padding:18px; border-radius:14px; border:1px solid var(--line); background:var(--card)}
+    .stat .kpi{font-size:28px; font-weight:800}
+    .divider{height:1px; background:var(--line); margin:10px 0 14px}
+
+    /* Market */
+    .bars{display:grid; gap:12px; margin-top:10px}
+    .bar{height:12px; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; border:1px solid var(--line)}
+    .bar > span{display:block; height:100%; background:var(--white)}
+    .legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:8px}
+    .dot{width:10px; height:10px; border-radius:50%; background:var(--white); display:inline-block; margin-right:6px}
+    .dot.muted{background:rgba(255,255,255,.25)}
+
+    /* Competitors */
+    .table{display:grid; gap:12px}
+    .row{display:grid; grid-template-columns:220px 1fr; gap:12px}
+    .row b{font-weight:700}
+    @media(max-width:720px){.row{grid-template-columns:1fr}}
+
+    /* Progress */
+    .timeline{display:grid; gap:14px}
+    .step{border:1px dashed var(--line); border-radius:14px; padding:16px; background:rgba(255,255,255,.02)}
+    .step strong{display:block; margin-bottom:6px}
+
+    /* Team */
+    .team{display:grid; gap:16px}
+    @media(min-width:860px){.team{grid-template-columns:repeat(4,1fr)}}
+    .person{border:1px solid var(--line); border-radius:14px; padding:14px; background:var(--card)}
+    .avatar{aspect-ratio:1/1; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-weight:800}
+
+    /* Footer */
+    footer{padding:48px 0; border-top:1px solid var(--line); background:rgba(255,255,255,.02)}
+    .foot{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
+
+    /* helper */
+    .rowgrid{display:grid; gap:16px}
+    @media(min-width:900px){.rowgrid{grid-template-columns:1.1fr .9fr}}
+
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#hero">Recruit <span class="muted">AI</span></a>
+      <div class="navlinks">
+        <a href="#problem">Проблема</a>
+        <a href="#solution">Решение</a>
+        <a href="#mvp">MVP</a>
+        <a href="#model">Модель</a>
+        <a href="#market">Рынок</a>
+        <a href="#progress">Прогресс</a>
+        <a href="#team">Команда</a>
+      </div>
+      <a class="btn" href="#cta">Попробовать демо</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="hero" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Ваш AI‑ассистент для интервью и отбора талантов</span>
+        <h1>Recruit AI — автоматизируйте интервью и анализ кандидатов</h1>
+        <p>Сократите время найма, оценивайте реальные soft/hard/communication skills и принимайте решения на основе данных.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#cta">Попробовать демо</a>
+          <a class="btn secondary" href="#mvp">Посмотреть MVP</a>
+        </div>
+      </div>
+      <div class="hero-shot">
+        <!-- TODO: Замените плейсхолдер на общий скрин/коллаж вашего MVP 1200x720 -->
+        <img src="mvp/hero-shot.png" alt="Скриншот Recruit AI — общий вид" />
+      </div>
+    </div>
+  </header>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="container">
+      <div class="section-head">
+        <h2>Какую проблему мы решаем?</h2>
+        <p class="muted">Три ключевые боли найма, подтверждённые интервью с HR‑экспертами.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Непрозрачность кандидатов</h3>
+          <p class="muted">Поведение и компетенции остаются неочевидными, особенно в эпоху ИИ — нужна глубокая проверка навыков.</p>
+        </div>
+        <div class="card">
+          <h3>Потеря времени</h3>
+          <p class="muted">Интервью отнимают ресурсы менеджеров и отвлекают от ключевых задач.</p>
+        </div>
+        <div class="card">
+          <h3>Высокие затраты</h3>
+          <p class="muted">Компании тратят миллионы долларов на участие менеджеров в процессе подбора.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution">
+    <div class="container rowgrid">
+      <div>
+        <div class="section-head">
+          <h2>AI‑платформа — универсальное решение</h2>
+          <p class="muted">Автоматические интервью, объективная оценка навыков, транскрипты и видео‑аналитика для HR.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>AI‑интервьюер</h3>
+            <p class="muted">Проводит собеседование, адаптирует вопросы, фиксирует ответы.</p>
+          </div>
+          <div class="card">
+            <h3>Оценка soft / hard / comm</h3>
+            <p class="muted">Анализ речи, уверенности, слов‑паразитов, жестов (если доступно видео).</p>
+          </div>
+          <div class="card">
+            <h3>Проверка резюме</h3>
+            <p class="muted">Сверяет заявленные навыки с реальными ответами кандидата.</p>
+          </div>
+          <div class="card">
+            <h3>Транскрипт + видео</h3>
+            <p class="muted">Готовый разбор — HR смотрит только лучших.</p>
+          </div>
+          <div class="card">
+            <h3>Экономия времени</h3>
+            <p class="muted">Систематизируем воронку интервью и снимаем рутину.</p>
+          </div>
+          <div class="card">
+            <h3>Интеграции</h3>
+            <p class="muted">Готовность к ATS/HRIS и аналитике (roadmap).</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-shot">
+        <!-- TODO: замените на скрин ключевого процесса -->
+        <img src="mvp/flow.png" alt="Процесс интервью и оценки в Recruit AI" />
+      </div>
+    </div>
+  </section>
+
+  <!-- MVP (screenshots) -->
+  <section id="mvp">
+    <div class="container">
+      <div class="section-head">
+        <h2>MVP — скриншоты продукта</h2>
+        <p class="muted">Замените изображения ниже на ваши актуальные экраны (PNG/JPG, 1400px шириной желательно).</p>
+      </div>
+      <div class="mvp">
+        <div class="screen">
+          <img src="mvp/screen-1.png" alt="Экран 1 — Лобби/старт интервью" />
+          <div class="screen-caption">Лобби кандидата: старт и проверка устройства</div>
+        </div>
+        <div class="screen">
+          <img src="mvp/screen-2.png" alt="Экран 2 — Видео‑интервью" />
+          <div class="screen-caption">Видео‑интервью с подсказками и индикаторами</div>
+        </div>
+        <div class="screen">
+          <img src="mvp/screen-3.png" alt="Экран 3 — Транскрипт и таймлайн" />
+          <div class="screen-caption">Транскрипт и таймлайн ключевых моментов</div>
+        </div>
+        <div class="screen">
+          <img src="mvp/screen-4.png" alt="Экран 4 — Оценка навыков" />
+          <div class="screen-caption">Оценка soft/hard/communication skills</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODEL -->
+  <section id="model">
+    <div class="container">
+      <div class="section-head">
+        <h2>Бизнес‑модель</h2>
+        <p class="muted">Подписка (SaaS), контролируемый CAC и высокий LTV.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="kpi">$120 / $300</div>
+          <div class="muted">Годовая подписка: индивид / корп</div>
+          <div class="divider"></div>
+          <p class="muted">Модель — лицензии на пользователя.</p>
+        </div>
+        <div class="stat">
+          <div class="kpi">$16k</div>
+          <div class="muted">CAC бюджет (Год 1)</div>
+          <div class="divider"></div>
+          <p class="muted">Meta/LinkedIn, SEO+контент, дизайн.</p>
+        </div>
+        <div class="stat">
+          <div class="kpi">$348</div>
+          <div class="muted">LTV (≈ 2 года)</div>
+          <div class="divider"></div>
+          <p class="muted">ARPU ~$174/год, LTV/CAC &gt; 10×.</p>
+        </div>
+        <div class="stat">
+          <div class="kpi">$81k → $162k</div>
+          <div class="muted">Доход: Год 1 → Год 2</div>
+          <div class="divider"></div>
+          <p class="muted">Рост за счёт конверсии и ретенции.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKET -->
+  <section id="market">
+    <div class="container rowgrid">
+      <div>
+        <div class="section-head">
+          <h2>Рынок и клиенты</h2>
+          <p class="muted">ЦА — SMB, HR‑агентства, IT‑компании, HR‑менеджеры.</p>
+        </div>
+        <ul class="muted">
+          <li>HR‑рынок ЦА: <b>$220 млн</b></li>
+          <li>Остальной APAC: <b>$6 млрд</b></li>
+          <li>Интервью с 40+ HR‑менеджерами, 5+ экспертами</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card">
+          <b>Сегменты (визуализация)</b>
+          <div class="bars">
+            <div class="bar" title="ЦА ≈ 5%"><span style="width:5%"></span></div>
+            <div class="bar" title="Остальной рынок ≈ 95%"><span style="width:95%" class="muted"></span></div>
+          </div>
+          <div class="legend">
+            <span><i class="dot"></i> ЦА</span>
+            <span><i class="dot muted"></i> Остальной рынок</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETITORS -->
+  <section id="competitors">
+    <div class="container">
+      <div class="section-head">
+        <h2>Конкуренты и преимущества</h2>
+        <p class="muted">Recruit AI объединяет то, что конкуренты делают разрозненно.</p>
+      </div>
+      <div class="table card">
+        <div class="row"><b>Поведенческий анализ</b><span class="muted">Глубже и объективнее: речь, эмоции, поведение</span></div>
+        <div class="row"><b>Анализ речи/эмоций</b><span class="muted">Видео‑интервью, трансляция метрик</span></div>
+        <div class="row"><b>Оценка soft‑skills</b><span class="muted">Не игровые тесты, а реальное интервью</span></div>
+        <div class="row"><b>Глубокая аналитика</b><span class="muted">Интеграции с AI‑инструментами и ATS (roadmap)</span></div>
+        <div class="row"><b>Автоматизация</b><span class="muted">Сокращение ручной работы и времени менеджеров</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section id="progress">
+    <div class="container rowgrid">
+      <div>
+        <div class="section-head">
+          <h2>Текущий прогресс</h2>
+          <p class="muted">MVP готов, первые пилоты, работа с партнёрами.</p>
+        </div>
+        <div class="timeline">
+          <div class="step"><strong>MVP: интервью + анализ</strong>Функционал для оценки и транскриптов.</div>
+          <div class="step"><strong>Пилоты с компаниями</strong>Сбор обратной связи, улучшение UX.</div>
+          <div class="step"><strong>Партнёрства</strong>HR‑агентства и таргетологи (переговоры/договорённости).</div>
+          <div class="step"><strong>Roadmap</strong>Интеграции, масштабирование в ЦА и выход на международный рынок.</div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <b>Сигналы спроса</b>
+          <p class="muted">По результатам интервью:</p>
+          <ul class="muted">
+            <li><b>80%</b> — готовы использовать продукт</li>
+            <li><b>20%</b> — заинтересованы, рассматривают возможность</li>
+          </ul>
+          <!-- TODO: Замените на скрин отчёта/опроса -->
+          <div class="screen" style="margin-top:10px">
+            <img src="mvp/research.png" alt="Опрос HR — результаты" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="container">
+      <div class="section-head">
+        <h2>Наша команда</h2>
+        <p class="muted">Команда профессионалов с техническими и бизнес‑скиллами.</p>
+      </div>
+      <div class="team">
+        <div class="person">
+          <div class="avatar">A</div>
+          <h3>Дастанбеков Айтмырза</h3>
+          <p class="muted">Team Lead, DevOps</p>
+        </div>
+        <div class="person">
+          <div class="avatar">N</div>
+          <h3>Султанбеков Нурбол</h3>
+          <p class="muted">Backend Dev., AI Scientist</p>
+        </div>
+        <div class="person">
+          <div class="avatar">K</div>
+          <h3>Кубатов Кайрат</h3>
+          <p class="muted">PM, Business Analyst</p>
+        </div>
+        <div class="person">
+          <div class="avatar">U</div>
+          <h3>Ундуск Никита</h3>
+          <p class="muted">Frontend Dev., UX/UI Designer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="container">
+      <div class="card" style="display:grid; gap:16px; padding:28px; text-align:center">
+        <h2>Готовы ускорить найм?</h2>
+        <p class="muted">Оставьте заявку — пришлём доступ к демо и свяжемся для пилота.</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+          <a class="btn" href="mailto:hello@recruit.ai">Запросить демо</a>
+          <a class="btn secondary" href="#mvp">Посмотреть скриншоты</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container foot">
+      <div class="muted">© Recruit AI, 2025</div>
+      <div class="muted">Email: hello@recruit.ai • Бишкек</div>
+    </div>
+  </footer>
+</body>
+</html>
