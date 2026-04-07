@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruit AI — 5 Free Technical Interviews</title>
+    
+    <!-- Preconnect & Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="water-bg"></div>
+    <!-- SVG Filters (hidden) -->
+    <svg class="svg-filters" aria-hidden="true">
+        <defs>
+            <!-- Gooey Filter for Hero Text -->
+            <filter id="gooey-threshold">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140" result="threshold" />
+                <feComposite in="SourceGraphic" in2="threshold" operator="over" />
+            </filter>
+            
+            <!-- Liquid Glass Filter for Cards -->
+            <filter id="liquid-glass" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <canvas id="balloonsCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="logo-full.png" alt="Recruit AI" style="height: 32px; object-fit: contain;">
+            </a>
+            <a href="#cta" class="nav-cta">Start for Free</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <canvas id="gridCanvas" class="hero-grid-canvas"></canvas>
+        
+        <div class="container hero-content">
+            <h1 class="hero-title" data-reveal>
+                The new standard for <br>
+                <div class="morph-container" style="filter: url(#gooey-threshold)">
+                    <span id="morphText1" class="morph-text">live-coding</span>
+                    <span id="morphText2" class="morph-text">interviews</span>
+                </div>
+            </h1>
+            <p class="hero-subtitle" data-reveal>
+                An AI system for transparent, cheat-proof technical interviews.
+                <strong>Save hundreds of hours</strong> on developer screening.
+            </p>
+            <div class="hero-cta-group" data-reveal>
+                <a href="#cta" class="btn-hero-primary">
+                    Claim 5 Free Interviews
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            
+            <div class="hero-metrics" data-reveal>
+                <div class="metric-item">
+                    <span class="metric-num" data-target="90" data-suffix="%">0%</span>
+                    <span class="metric-label">Fraud Detection</span>
+                </div>
+                <div class="metric-sep"></div>
+                <div class="metric-item">
+                    <span class="metric-num" data-target="10" data-suffix="x">0x</span>
+                    <span class="metric-label">Faster Hiring</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll-Linked Features Section (replaces value grid) -->
+    <section id="features" class="scroll-features-wrap">
+        <div class="scroll-features-sticky">
+            <div class="container text-center" style="position: relative; z-index: 10;">
+                <span class="section-eyebrow">Key Features</span>
+                <h2 class="section-heading" style="margin-bottom: 30px;">
+                    Experience
+                    <div class="glass-word-container">
+                        <span id="scrollWord" class="glass-word">automated</span>
+                    </div>
+                    interviews
+                </h2>
+                <p id="scrollDesc" class="scroll-feature-desc" style="font-size: 20px; color: var(--text-muted); max-width: 600px; margin: 0 auto; height: 60px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);">
+                    Save hundreds of hours by automating your technical screening tasks.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps (Warp BG) -->
+    <section class="steps-section section">
+        <div class="warp-bg">
+            <div class="warp-layer warp-1"></div>
+            <div class="warp-layer warp-2"></div>
+            <div class="warp-layer warp-3"></div>
+        </div>
+        
+        <div class="container steps-container">
+            <div style="max-width: 600px; margin: 0 auto 60px;">
+                <span class="section-eyebrow">How it works</span>
+                <h2 class="section-heading">3 steps to your best hires</h2>
+                
+                <div class="steps-timeline">
+                    <!-- Step 1 -->
+                    <div class="step-item" data-reveal>
+                        <div class="step-num">1</div>
+                        <div class="step-body">
+                            <h3>Invite Candidate</h3>
+                            <p>Send a unique link for the AI-driven technical session.</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <!-- Step 2 -->
+                    <div class="step-item" data-reveal>
+                        <div class="step-num">2</div>
+                        <div class="step-body">
+                            <h3>AI Interview</h3>
+                            <p>The system adaptively tests coding skills and monitors behavior.</p>
+                        </div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <!-- Step 3 -->
+                    <div class="step-item" data-reveal>
+                        <div class="step-num">3</div>
+                        <div class="step-body">
+                            <h3>Detailed Report</h3>
+                            <p>Receive an objective scorecard directly to your email or ATS.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof -->
+    <section class="proof-section section">
+        <div class="container">
+            <div class="proof-grid">
+                <div class="proof-item">
+                    <div class="proof-value">500+</div>
+                    <div class="proof-label">Interviews Conducted</div>
+                </div>
+                <div class="proof-sep"></div>
+                <div class="proof-item">
+                    <div class="proof-value">40h</div>
+                    <div class="proof-label">Saved per month per Recruiter</div>
+                </div>
+            </div>
+            <p class="proof-quote">"Recruit AI allowed us to completely eliminate cheating on technical tests and sped up our hiring pipeline dramatically."</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <div class="liquid-card-cta" data-reveal>
+                <div class="cta-inner">
+                    <div id="ctaContent">
+                        <span class="cta-eyebrow">Limited Offer</span>
+                        <h2 class="cta-heading">Ready to upgrade your hiring?</h2>
+                        <p class="cta-sub">Leave your contacts now and receive <strong>5 free technical interviews</strong> right away.</p>
+                        
+                        <form class="cta-form" id="ctaForm" novalidate>
+                            <div class="form-fields">
+                                <div class="field">
+                                    <input type="text" id="userName" name="name" placeholder="Your Name" required
+                                        autocomplete="name">
+                                </div>
+                                <div class="field">
+                                    <input type="email" id="userEmail" name="email" placeholder="Email Address" required
+                                        autocomplete="email">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-submit" id="submitBtn">
+                                <span class="btn-submit-text">Get 5 Free Interviews</span>
+                                <div class="btn-submit-loader"></div>
+                            </button>
+                            <p class="form-disclaimer">No credit card required. Easy setup.</p>
+                        </form>
+                    </div>
+                    <div id="ctaSuccess" class="cta-success">
+                        <svg class="success-check" viewBox="0 0 52 52" fill="none" stroke="var(--accent-blue)" stroke-width="4">
+                            <circle cx="26" cy="26" r="24" stroke="rgba(0,136,255,0.2)"/>
+                            <path class="check-path" d="M14 27l8 8 16-16" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Request Accepted!</h3>
+                        <p>We will contact you shortly to activate your 5 free sessions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-logo">
+                <img src="logo-icon.png" alt="Recruit AI Logo" style="height: 48px; object-fit: contain;">
+            </div>
+            <p class="footer-copy">&copy; 2026 Recruit AI. @Engineering College Students</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
